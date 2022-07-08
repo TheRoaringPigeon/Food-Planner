@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Food_Planner.PageModels;
+using Food_Planner.PageModels.Base;
+using Food_Planner.Services.Navigation;
+using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,12 +13,16 @@ namespace Food_Planner
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
         }
 
-        protected override void OnStart()
+        Task InitNavigation()
         {
+            var navService = PageModelLocator.Resolve<INavigationService>();
+            return navService.NavigateToAsync<LoginPageModel>();
+        }
+        protected override async void OnStart()
+        {
+            await InitNavigation();
         }
 
         protected override void OnSleep()
